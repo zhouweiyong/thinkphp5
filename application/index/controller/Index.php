@@ -12,8 +12,7 @@ class Index extends Controller
 
     //http://localhost:8888/index.php/index/index/show?name=tome
     //参数为必须
-    public function show($name){
-        $this->assign("name",$name);
-        return $this->fetch();
+    public function show(){
+        return "Hello ThinkPHP";
     }
 }
