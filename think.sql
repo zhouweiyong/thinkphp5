@@ -51,12 +51,30 @@ CREATE TABLE IF NOT EXISTS zwy_student(
 )ENGINE=MyISAM CHARSET=utf8;
 
 
+#关联 一个用户对应一份档案
+CREATE TABLE IF NOT EXISTS `think_profile` (
+    `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `truename` varchar(25) NOT NULL,
+    `birthday` int(11) NOT NULL,
+    `address` varchar(255) DEFAULT NULL,
+    `email` varchar(255) DEFAULT NULL,
+    `user_id` int(6) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-
-
-
-
+#一个用户对应多本图书
+DROP TABLE IF EXISTS `think_book`;
+CREATE TABLE IF NOT EXISTS `think_book` (
+    `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `title` varchar(255) NOT NULL,
+    `publish_time` int(11) UNSIGNED DEFAULT NULL,
+    `create_time` int(11) UNSIGNED NOT NULL,
+    `update_time` int(11) UNSIGNED NOT NULL,
+    `status` tinyint(1) NOT NULL,
+    `user_id` int(6) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 

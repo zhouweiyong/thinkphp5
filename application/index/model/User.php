@@ -32,4 +32,14 @@ class User extends Model
         "status" => 1,
     ];
 
+    //定义关联方法:一对一
+    public function profile(){
+        return $this->hasOne("Profile");
+    }
+
+    //定义关联方法:一对多
+    public function books(){
+        return $this->hasMany("Book");
+    }
+
 }
