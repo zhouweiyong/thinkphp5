@@ -42,4 +42,10 @@ class User extends Model
         return $this->hasMany("Book");
     }
 
+
+    // 定义多对多关联
+    public function roles(){
+        return $this->belongsToMany("Role","think_access");
+    }
+
 }

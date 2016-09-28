@@ -77,9 +77,22 @@ CREATE TABLE IF NOT EXISTS `think_book` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
+#一个用户会有多个角色，同时一个角色也会包含多个用户，这就是一个典型的多对多关联
+DROP TABLE IF EXISTS `think_role`;
+CREATE TABLE IF NOT EXISTS `think_role` (
+    `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(25) NOT NULL,
+    `title` varchar(50) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-
+#多对多关联通常一定会有一个中间表，也称为枢纽表，所以需要创建一个用户角色的中间表
+DROP TABLE IF EXISTS `think_access`;
+CREATE TABLE IF NOT EXISTS `think_access` (
+    `user_id` int(8) UNSIGNED NOT NULL,
+    `role_id` int(5) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 

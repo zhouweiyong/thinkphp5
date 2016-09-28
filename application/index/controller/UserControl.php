@@ -15,7 +15,7 @@ use app\index\model\User as UserModel;
  * 模型跟数据库表格关联
  * 通过模型操作数据库
  */
-class User
+class UserControl
 {
     //新增用户数据
     public function add()

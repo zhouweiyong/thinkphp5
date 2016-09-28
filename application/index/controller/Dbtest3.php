@@ -12,6 +12,7 @@ use app\index\model\Book;
 use app\index\model\Profile;
 use app\index\model\User;
 use think\Controller;
+use think\Db;
 
 /**
  * 1,关联
@@ -116,7 +117,77 @@ class Dbtest3 extends Controller
         $books = $user->books;
          return json( $books);
     }
+
+    public function read3($id){
+        $user = User::get($id);
+        // 获取作者名下状态为1的关联数据
+        $book = $user->books()->where("status",1)->select();
+        //return json($book);
+        // 获取作者写的某本书
+        $book = $user->books()->getByTitle("西游记");
+        return json($book);
+    }
+
+    public function read4(){
+        // 查询有写过书的作者列表
+        $user = User::has("books")->select();
+        // 查询写过三本书以上的作者
+        $user = User::has("books",">=",2)->select();
+        // 查询写过西游记的作者
+        $user = User::hasWhere("books",["title"=>"西游记"])->select();
+        return json($user);
+    }
+
+    //更新
+    public function update2($id){
+        $user = User::get($id);
+        $book = $user->books()->getByTitle("西游记");
+        $book->title = "西游记222";
+        $book->save();
+    }
+
+
+
+    //删除
+    public function delete2($id){
+        $user = User::get($id);
+        // 删除部分关联数据
+        $book = $user->books()->getByTitle("西游记222");
+        $book->delete();
+    }
+
+    public function delete3($id){
+        $user = User::get($id);
+        if ($user->delete()){
+            $user->books()->delete();
+        }
+    }
     //-------------一对多------------------------
 
 
+    //-------------多对多------------------------
+    //一个用户会有多个角色，同时一个角色也会包含多个用户，这就是一个典型的多对多关联
+    public function add4(){
+//        $user  = User::getByNickname("zwy");
+        $user  = User::get(4);
+//        return $user;
+        $user->roles()->saveAll([
+            ["name"=>"leader","title"=>"领导"],
+            ["name"=>"admin","title"=>"管理员"]
+        ]);
+        return "用户角色新增成功";
+    }
+
+    public function add5(){
+        $user = User::get(7);
+//         return json($user->roles);
+        $user->roles()->save(["name"=>"editor4","title"=>"编辑4"]);
+        return "用户角色新增成功";
+    }
+
+    public function add6(){
+        $res = Db::table("think_access")->insert(["user_id" => 7, "role_id" => 18]);
+        dump($res);
+    }
+    //-------------多对多------------------------
 }

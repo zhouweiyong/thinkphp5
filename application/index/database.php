@@ -4,7 +4,7 @@
 
 return [
     // 数据库表前缀
-    'prefix'      => 'zwy_',
+    'prefix'      => '',
     // 数据库连接参数
     'params' => [
         // 使用长连接
